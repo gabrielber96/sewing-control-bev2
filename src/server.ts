@@ -1,4 +1,6 @@
 import express, { Application, NextFunction, Request, Response } from "express";
+import cors from "cors";
+import morgan from "morgan";
 export class Server {
   private _app: Application;
   private _port: number;
@@ -32,7 +34,18 @@ export class Server {
       }
     );
   }
-  private middlewares() {}
+  private middlewares() {
+    this._app.use(cors({ credentials: true }));
+    this._app.use(morgan("dev"));
+    this._app.use(express.json({ limit: "50mb" }));
+    this._app.use(
+      express.urlencoded({
+        limit: "50mb",
+        extended: true,
+        parameterLimit: 50000,
+      })
+    );
+  }
   public start(callback: () => void): void {
     this._app.listen(this._port, callback);
   }
