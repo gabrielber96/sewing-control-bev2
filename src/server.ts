@@ -10,7 +10,11 @@ export class Server {
     this.routes();
     this.errors();
   }
-  private routes(): void {}
+  private routes(): void {
+    this._app.use("/", () => {
+      console.log("Root default");
+    });
+  }
   private errors(): void {
     this._app.use((req: Request, res: Response, next: NextFunction) => {
       const err = new Error(`Not Fount - ${req.originalUrl}`);
