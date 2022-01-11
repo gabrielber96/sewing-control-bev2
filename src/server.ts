@@ -8,9 +8,10 @@ export class Server {
 
     this.middlewares();
     this.routes();
+    this.errors();
   }
   private routes(): void {}
-  private errors() {
+  private errors(): void {
     this._app.use((req: Request, res: Response, next: NextFunction) => {
       const err = new Error(`Not Fount - ${req.originalUrl}`);
       res.status(404);
